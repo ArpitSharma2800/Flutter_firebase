@@ -1,3 +1,4 @@
+import 'package:days_100_code/screens/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +12,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Text("Authenticated"),
-    ));
+    return Authenticate();
   }
 }

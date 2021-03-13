@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1080618396656",
+    "project_id": "days100-1ab85",
+    "storage_bucket": "days100-1ab85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080618396656:android:24829788ce5364e9b18b35",
+        "android_client_info": {
+          "package_name": "com.arpit.days_100_code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080618396656-dijev86d7tfa2gp2ugoai7g2kp4lggj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arpit.days_100_code",
+            "certificate_hash": "45411dc240ccdc82e7f4a02547d9625a26266fa8"
+          }
+        },
+        {
+          "client_id": "1080618396656-kdoqt91696c9a34bnjmol1c6ugp1hd84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKR0q5tbymfWY0scx1teKXdBDXm72E8kA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080618396656-kdoqt91696c9a34bnjmol1c6ugp1hd84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,7 +15,7 @@ class _LocalAuthState extends State<LocalAuth> {
   final LocalAuthentication auth = LocalAuthentication();
   _SupportState _supportState = _SupportState.unknown;
   bool _canCheckBiometrics;
-  List<BiometricType> _availableBiometrics;
+  // List<BiometricType> _availableBiometrics;
   String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
 
@@ -50,20 +50,20 @@ class _LocalAuthState extends State<LocalAuth> {
     });
   }
 
-  Future<void> _getAvailableBiometrics() async {
-    List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      availableBiometrics = <BiometricType>[];
-      print(e);
-    }
-    if (!mounted) return;
+  // Future<void> _getAvailableBiometrics() async {
+  //   List<BiometricType> availableBiometrics;
+  //   try {
+  //     availableBiometrics = await auth.getAvailableBiometrics();
+  //   } on PlatformException catch (e) {
+  //     availableBiometrics = <BiometricType>[];
+  //     print(e);
+  //   }
+  //   if (!mounted) return;
 
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
-  }
+  //   setState(() {
+  //     _availableBiometrics = availableBiometrics;
+  //   });
+  // }
 
   Future<void> _authenticate() async {
     bool authenticated = false;
@@ -119,7 +119,6 @@ class _LocalAuthState extends State<LocalAuth> {
       });
       return;
     }
-    if (!mounted) return;
 
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
     setState(() {
