@@ -14,7 +14,8 @@ class AuthService {
     String errorMessage;
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
+          // .createUserWithEmailAndPassword
+          .signInWithEmailAndPassword(
               email: "barry.allen@example.com",
               password: "SuperSecretPassword!");
       final User user = userCredential.user;
@@ -35,13 +36,14 @@ class AuthService {
     // register with email and password
 
     // sign out
-    Future signOut() async {
-      try {
-        return await _auth.signOut();
-      } catch (error) {
-        print(error.toString());
-        return null;
-      }
+  }
+
+  Future SignOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (error) {
+      print(error.toString());
+      return null;
     }
   }
 }

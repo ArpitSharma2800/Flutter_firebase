@@ -1,5 +1,6 @@
+import 'package:days_100_code/screens/appScreens/homeApp.dart';
 import 'package:days_100_code/screens/authenticate/authenticate.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,8 +11,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future token() async {
+    print(FirebaseAuth.instance.currentUser
+        .getIdTokenResult()
+        .then((value) => print(value.token)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Authenticate();
+    User currentFirebaseUser = FirebaseAuth.instance.currentUser;
+
+    if (currentFirebaseUser != null) {
+      // token();
+      return HomeApp();
+    } else {
+      return Authenticate();
+    }
   }
 }
