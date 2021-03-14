@@ -1,7 +1,7 @@
 // import 'package:days_100_code/model/user.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseAuthenticated extends ChangeNotifier {
   bool _authenticated = false;
@@ -16,7 +16,11 @@ class FirebaseAuthenticated extends ChangeNotifier {
       notEligible();
   }
 
-  void eligible(String emailU, DateTime loggedInU, String uidU) {
+  void eligible(String emailU, DateTime loggedInU, String uidU) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', emailU);
+    prefs.setString('loggedIn', loggedInU.toString());
+    prefs.setString('uid', uidU);
     _authenticated = true;
     email = emailU;
     loggedIn = loggedInU;
@@ -24,8 +28,15 @@ class FirebaseAuthenticated extends ChangeNotifier {
     notifyListeners();
   }
 
-  void notEligible() {
+  void notEligible() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('email', null);
+    prefs.setString('loggedIn', null);
+    prefs.setString('uid', null);
     _authenticated = false;
+    email;
+    loggedIn;
+    uid;
 
     //Call this whenever there is some change in any field of change notifier.
     notifyListeners();

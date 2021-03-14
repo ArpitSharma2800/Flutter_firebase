@@ -20,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     User currentFirebaseUser = FirebaseAuth.instance.currentUser;
-
     if (currentFirebaseUser != null) {
-      // token();
       return HomeApp();
     } else {
       return Authenticate();
