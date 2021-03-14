@@ -1,6 +1,8 @@
+import 'package:days_100_code/Provider/ProviderClass.dart';
 import 'package:flutter/material.dart';
 import 'package:days_100_code/screens/fingerPrintAuth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +15,13 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: '100Days', debugShowCheckedModeBanner: false, home: LocalAuth());
+    return ChangeNotifierProvider(
+      //expose it to its descendants and rebuilds dependents whenever ChangeNotifier.notifyListeners is called
+      create: (_) => FirebaseAuthenticated(),
+      child: MaterialApp(
+          title: '100Days',
+          debugShowCheckedModeBanner: false,
+          home: LocalAuth()),
+    );
   }
 }

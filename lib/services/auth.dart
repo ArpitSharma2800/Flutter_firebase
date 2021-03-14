@@ -18,7 +18,7 @@ class AuthService {
               email: "barry.allen@example.com",
               password: "SuperSecretPassword!");
       final User user = userCredential.user;
-      // print();
+      // print(user);
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
