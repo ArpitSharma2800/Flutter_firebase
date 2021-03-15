@@ -1,3 +1,4 @@
+import 'package:days_100_code/screens/authenticate/register.dart';
 import 'package:days_100_code/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -97,8 +98,8 @@ class _AuthenticateState extends State<Authenticate> {
                   height: 55,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (_) => SignIn()));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => Register()));
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
