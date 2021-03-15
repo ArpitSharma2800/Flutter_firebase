@@ -1,5 +1,6 @@
 import 'package:days_100_code/Provider/ProviderClass.dart';
 import 'package:days_100_code/screens/appScreens/homeApp.dart';
+import 'package:days_100_code/screens/authenticate/sign_in.dart';
 import 'package:days_100_code/services/auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -154,18 +155,22 @@ class _RegisterState extends State<Register> {
                       child: GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState.validate()) {
-                            dynamic result = await _auth.signInAnon(
+                            await _displaySnackBar(context);
+                            dynamic result = await _auth.register(
                                 myControllerEmail.text,
                                 myControllerPassword.text);
                             if (result == null) {
-                              print('error signing in');
+                              print('error regsiter in');
+                              __displaySnackBarError(context);
                             } else {
                               provider.authCall(result.email,
                                   result.metadata.lastSignInTime, result.uid);
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeApp()),
+                                    builder: (context) => SignIn()),
                               );
                               print('signed in');
                               print(result.metadata.lastSignInTime);
@@ -222,3 +227,31 @@ class _RegisterState extends State<Register> {
 //                     print(result.metadata.lastSignInTime);
 //                   }
 //                 },
+_displaySnackBar(BuildContext context) {
+  final snackBar = SnackBar(
+    elevation: 6.0,
+    behavior: SnackBarBehavior.floating,
+    duration: Duration(days: 1),
+    content: new Row(
+      children: <Widget>[
+        // SpinKitCubeGrid(
+        //   color: Colors.white,
+        //   size: 20.0,
+        // ),
+        new Text("  Registering...")
+      ],
+    ),
+  );
+  // _scaffoldKey.currentState.showSnackBar(snackBar);
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+__displaySnackBarError(BuildContext context) {
+  final snackBar = SnackBar(
+    backgroundColor: Colors.red[400],
+    content: new Row(
+      children: <Widget>[new Text("  Invalid Credentials...")],
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
