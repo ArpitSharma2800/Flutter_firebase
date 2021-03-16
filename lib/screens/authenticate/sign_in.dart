@@ -160,6 +160,8 @@ class _SignInState extends State<SignIn> {
                                 myControllerPassword.text);
                             if (result == null) {
                               print('error signing in');
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               __displaySnackBarError(context);
                             } else {
                               provider.authCall(result.email,
