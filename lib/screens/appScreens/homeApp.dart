@@ -133,24 +133,51 @@ class _HomeAppState extends State<HomeApp> {
       body:
           Consumer<FirebaseAuthenticated>(builder: (context, provider, child) {
         return (Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          child: TextButton(
-            child: Text(email),
-            onPressed: () async {
-              addStore();
-              // dynamic result = await _auth.SignOut();
-              // if (result == null) {
-              //   provider.notEligible();
-              //   Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => HomeScreen()),
-              //   );
-              // } else {
-              //   print('signed in');
-              // }
-            },
-          ),
-        ));
+            width: MediaQuery.of(context).size.width,
+            // padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: users.snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading");
+                }
+
+                return new ListView(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    print(document.data()['Works']);
+                    return new ListTile(
+                        title: new Text(
+                          document.data()['Works'],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        subtitle: new Text(document.data()['Link'],
+                            style: TextStyle(color: Colors.white)));
+                  }).toList(),
+                );
+              },
+            )
+            // TextButton(
+            //   child: Text(email),
+            //   onPressed: () async {
+            //     addStore();
+            //     // dynamic result = await _auth.SignOut();
+            //     // if (result == null) {
+            //     //   provider.notEligible();
+            //     //   Navigator.pushReplacement(
+            //     //     context,
+            //     //     MaterialPageRoute(builder: (context) => HomeScreen()),
+            //     //   );
+            //     // } else {
+            //     //   print('signed in');
+            //     // }
+            //   },
+            // ),
+            ));
       }),
     ));
   }
