@@ -111,7 +111,7 @@ class _SignInState extends State<SignIn> {
                                     obscureText: true,
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(
-                                          Icons.email,
+                                          Icons.security,
                                           color: Colors.greenAccent[400],
                                         ),
                                         filled: true,

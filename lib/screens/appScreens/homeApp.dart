@@ -1,4 +1,5 @@
 import 'package:days_100_code/Provider/ProviderClass.dart';
+import 'package:days_100_code/screens/appScreens/addFirebase.dart';
 import 'package:days_100_code/screens/homeScreen.dart';
 import 'package:days_100_code/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +18,22 @@ class _HomeAppState extends State<HomeApp> {
   final AuthService _auth = AuthService();
   String email = "";
   CollectionReference users = FirebaseFirestore.instance.collection('100Days');
-  Future<void> addStore() async {
-    print('preses');
-    return users
-        // .add({
-        //   'Link': 'fullName', // John Doe
-        //   'Works': 'company', // Stokes and Sons
-        //   // 'date': age // 42
-        // })
-        .get()
-        .then((value) => {
-              value.docs.forEach((document) {
-                print(document.data());
-              })
-            })
-        .catchError((error) => print("Failed to add user: $error"));
-  }
+  // Future<void> addStore() async {
+  //   print('preses');
+  //   return users
+  //       // .add({
+  //       //   'Link': 'fullName', // John Doe
+  //       //   'Works': 'company', // Stokes and Sons
+  //       //   // 'date': age // 42
+  //       // })
+  //       .get()
+  //       .then((value) => {
+  //             value.docs.forEach((document) {
+  //               print(document.data());
+  //             })
+  //           })
+  //       .catchError((error) => print("Failed to add user: $error"));
+  // }
 
   void getEmailInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -89,17 +90,17 @@ class _HomeAppState extends State<HomeApp> {
                   ),
                   ListTile(
                     title: Text(
-                      'Item 1',
+                      'Add Data',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.greenAccent[400],
                       ),
                     ),
                     onTap: () {
-                      // Update the state of the app
-                      // ...
-                      // Then close the drawer
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddFire2()),
+                      );
                     },
                   ),
                   ListTile(
