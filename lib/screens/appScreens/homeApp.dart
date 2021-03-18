@@ -3,6 +3,7 @@ import 'package:days_100_code/screens/appScreens/addFirebase.dart';
 import 'package:days_100_code/screens/homeScreen.dart';
 import 'package:days_100_code/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +18,7 @@ class HomeApp extends StatefulWidget {
 class _HomeAppState extends State<HomeApp> {
   final AuthService _auth = AuthService();
   String email = "";
+  String uid = "";
   CollectionReference users = FirebaseFirestore.instance.collection('100Days');
   // Future<void> addStore() async {
   //   print('preses');
@@ -26,6 +28,8 @@ class _HomeAppState extends State<HomeApp> {
   //       //   'Works': 'company', // Stokes and Sons
   //       //   // 'date': age // 42
   //       // })
+
+  //       .where('uid', isEqualTo: uid)
   //       .get()
   //       .then((value) => {
   //             value.docs.forEach((document) {
@@ -34,12 +38,28 @@ class _HomeAppState extends State<HomeApp> {
   //           })
   //       .catchError((error) => print("Failed to add user: $error"));
   // }
+  Future<void> deleteUser(docUid) {
+    return users
+        .doc(docUid)
+        .delete()
+        .then((value) => {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+              _displaySnackBarSuccess(context)
+            })
+        .catchError((error) => {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+              __displaySnackBarError(context)
+            });
+  }
 
   void getEmailInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String userEmail = prefs.getString('email');
+    final String userUid = prefs.getString('uid');
+    print(userUid);
     setState(() {
       email = userEmail;
+      uid = userUid;
     });
   }
 
@@ -79,7 +99,7 @@ class _HomeAppState extends State<HomeApp> {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   DrawerHeader(
-                    child: Text('100DaysOfCode',
+                    child: Text(email,
                         style: TextStyle(
                           fontSize: 24,
                           color: Colors.black,
@@ -137,7 +157,7 @@ class _HomeAppState extends State<HomeApp> {
             width: MediaQuery.of(context).size.width,
             // padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
             child: StreamBuilder<QuerySnapshot>(
-              stream: users.snapshots(),
+              stream: users.where('uid', isEqualTo: uid).snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
@@ -169,13 +189,34 @@ class _HomeAppState extends State<HomeApp> {
                           ),
                           subtitle: new Text(document.data()['Github'],
                               style: TextStyle(color: Colors.blue)),
-                          trailing: IconButton(
-                            icon: Icon(Icons.delete_forever),
-                            color: Colors.red,
-                            onPressed: () {
-                              print(document.id);
-                            },
-                          ),
+                          trailing: document.data()['tweeted'] == true
+                              ? Wrap(children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FaIcon(
+                                      FontAwesomeIcons.twitter,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete_forever),
+                                    color: Colors.red,
+                                    onPressed: () {
+                                      _displaySnackBar(context);
+                                      deleteUser(document.id);
+                                      print(document.id);
+                                    },
+                                  ),
+                                ])
+                              : IconButton(
+                                  icon: Icon(Icons.delete_forever),
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    _displaySnackBar(context);
+                                    deleteUser(document.id);
+                                    print(document.id);
+                                  },
+                                ),
                           // isThreeLine: true,
                         ),
                       ),
@@ -204,4 +245,54 @@ class _HomeAppState extends State<HomeApp> {
       }),
     ));
   }
+}
+
+_displaySnackBar(BuildContext context) {
+  final snackBar = SnackBar(
+    elevation: 6.0,
+    behavior: SnackBarBehavior.floating,
+    duration: Duration(days: 1),
+    content: new Row(
+      children: <Widget>[
+        // SpinKitCubeGrid(
+        //   color: Colors.white,
+        //   size: 20.0,
+        // ),
+        new Text("  Deleting from firestore")
+      ],
+    ),
+  );
+  // _scaffoldKey.currentState.showSnackBar(snackBar);
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+_displaySnackBarSuccess(BuildContext context) {
+  final snackBar = SnackBar(
+    elevation: 6.0,
+    backgroundColor: Colors.greenAccent[400],
+    behavior: SnackBarBehavior.floating,
+    duration: Duration(seconds: 1),
+    content: new Row(
+      children: <Widget>[
+        // SpinKitCubeGrid(
+        //   color: Colors.white,
+        //   size: 20.0,
+        // ),
+        new Text("  Deleted from Firestore")
+      ],
+    ),
+  );
+  // _scaffoldKey.currentState.showSnackBar(snackBar);
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+__displaySnackBarError(BuildContext context) {
+  final snackBar = SnackBar(
+    duration: Duration(seconds: 1),
+    backgroundColor: Colors.red[400],
+    content: new Row(
+      children: <Widget>[new Text("  Eorrors in deleting...")],
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

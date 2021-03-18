@@ -34,7 +34,7 @@ class _AddFire2State extends State<AddFire2> {
         .add({
           'Github': myControllerGithub.text, // John Doe
           'Works': myControllerWork.text, // Stokes and Sons
-          'day': myControllerDay.text,
+          'day': int.parse(myControllerDay.text),
           'tweeted': isSwitched,
           'uid': userUid // 42
         })

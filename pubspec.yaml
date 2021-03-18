@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore: ^1.0.1
   dropdown_formfield: ^0.1.3
   checkbox_formfield: ^0.1.0+3
+  font_awesome_flutter: ^8.12.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
