@@ -34,9 +34,9 @@ class FirebaseAuthenticated extends ChangeNotifier {
     prefs.setString('loggedIn', null);
     prefs.setString('uid', null);
     _authenticated = false;
-    email;
-    loggedIn;
-    uid;
+    email = null;
+    loggedIn = null;
+    uid = null;
 
     //Call this whenever there is some change in any field of change notifier.
     notifyListeners();

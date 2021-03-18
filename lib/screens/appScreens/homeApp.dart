@@ -150,20 +150,24 @@ class _HomeAppState extends State<HomeApp> {
 
                 return new ListView(
                   children: snapshot.data.docs.map((DocumentSnapshot document) {
-                    print(document.data()['Works']);
+                    // print(document.data()['Works']);
                     return Container(
                       margin: EdgeInsets.only(top: 10),
                       child: new Card(
                         color: Colors.blueGrey[900],
                         child: ListTile(
-                          leading: FlutterLogo(size: 72.0),
+                          leading: Text(document.data()['day'].toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold)),
                           title: Text(
                             document.data()['Works'],
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: new Text(document.data()['Link'],
+                          subtitle: new Text(document.data()['Github'],
                               style: TextStyle(color: Colors.blue)),
                           trailing: IconButton(
                             icon: Icon(Icons.delete_forever),
