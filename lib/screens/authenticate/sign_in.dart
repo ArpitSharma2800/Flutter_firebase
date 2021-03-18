@@ -23,11 +23,6 @@ class _SignInState extends State<SignIn> {
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.black,
-        // appBar: AppBar(
-        //   // backgroundColor: Colors.brown[400],
-        //   elevation: 0.0,
-        //   title: Text('Login to 100DaysOfCode'),
-        // ),
         body: Consumer<FirebaseAuthenticated>(
             builder: (context, provider, child) {
           return SingleChildScrollView(
@@ -46,16 +41,6 @@ class _SignInState extends State<SignIn> {
                             color: Colors.white54,
                             fontSize: 26.0,
                             fontWeight: FontWeight.w700)),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Divider(
-                    //   color: Colors.white54,
-                    //   height: 5,
-                    //   thickness: 2,
-                    //   indent: 0,
-                    //   endIndent: 0,
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -213,37 +198,15 @@ class _SignInState extends State<SignIn> {
   }
 }
 
-// onPressed: () async {
-//                   dynamic result = await _auth.signInAnon();
-//                   if (result == null) {
-//                     print('error signing in');
-//                   } else {
-//                     provider.authCall(result.email,
-//                         result.metadata.lastSignInTime, result.uid);
-//                     Navigator.pushReplacement(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => HomeApp()),
-//                     );
-//                     print('signed in');
-//                     print(result.metadata.lastSignInTime);
-//                   }
-//                 },
 _displaySnackBar(BuildContext context) {
   final snackBar = SnackBar(
     elevation: 6.0,
     behavior: SnackBarBehavior.floating,
     duration: Duration(days: 1),
     content: new Row(
-      children: <Widget>[
-        // SpinKitCubeGrid(
-        //   color: Colors.white,
-        //   size: 20.0,
-        // ),
-        new Text("  Registering...")
-      ],
+      children: <Widget>[new Text("  Registering...")],
     ),
   );
-  // _scaffoldKey.currentState.showSnackBar(snackBar);
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 

@@ -16,7 +16,6 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      //expose it to its descendants and rebuilds dependents whenever ChangeNotifier.notifyListeners is called
       create: (_) => FirebaseAuthenticated(),
       child: MaterialApp(
           title: '100Days',

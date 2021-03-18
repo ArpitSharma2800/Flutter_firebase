@@ -89,9 +89,6 @@ class _HomeAppState extends State<HomeApp> {
           canvasColor: Colors.black, //desired color
         ),
         child: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
           child: Consumer<FirebaseAuthenticated>(
             builder: (context, provider, child) {
               return ListView(
@@ -155,7 +152,6 @@ class _HomeAppState extends State<HomeApp> {
           Consumer<FirebaseAuthenticated>(builder: (context, provider, child) {
         return (Container(
             width: MediaQuery.of(context).size.width,
-            // padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
             child: StreamBuilder<QuerySnapshot>(
               stream: users.where('uid', isEqualTo: uid).snapshots(),
               builder: (BuildContext context,
@@ -217,31 +213,13 @@ class _HomeAppState extends State<HomeApp> {
                                     print(document.id);
                                   },
                                 ),
-                          // isThreeLine: true,
                         ),
                       ),
                     );
                   }).toList(),
                 );
               },
-            )
-            // TextButton(
-            //   child: Text(email),
-            //   onPressed: () async {
-            //     addStore();
-            //     // dynamic result = await _auth.SignOut();
-            //     // if (result == null) {
-            //     //   provider.notEligible();
-            //     //   Navigator.pushReplacement(
-            //     //     context,
-            //     //     MaterialPageRoute(builder: (context) => HomeScreen()),
-            //     //   );
-            //     // } else {
-            //     //   print('signed in');
-            //     // }
-            //   },
-            // ),
-            ));
+            )));
       }),
     ));
   }
@@ -253,16 +231,9 @@ _displaySnackBar(BuildContext context) {
     behavior: SnackBarBehavior.floating,
     duration: Duration(days: 1),
     content: new Row(
-      children: <Widget>[
-        // SpinKitCubeGrid(
-        //   color: Colors.white,
-        //   size: 20.0,
-        // ),
-        new Text("  Deleting from firestore")
-      ],
+      children: <Widget>[new Text("  Deleting from firestore")],
     ),
   );
-  // _scaffoldKey.currentState.showSnackBar(snackBar);
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
@@ -273,16 +244,9 @@ _displaySnackBarSuccess(BuildContext context) {
     behavior: SnackBarBehavior.floating,
     duration: Duration(seconds: 1),
     content: new Row(
-      children: <Widget>[
-        // SpinKitCubeGrid(
-        //   color: Colors.white,
-        //   size: 20.0,
-        // ),
-        new Text("  Deleted from Firestore")
-      ],
+      children: <Widget>[new Text("  Deleted from Firestore")],
     ),
   );
-  // _scaffoldKey.currentState.showSnackBar(snackBar);
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 

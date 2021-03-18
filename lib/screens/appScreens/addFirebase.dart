@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:days_100_code/Provider/ProviderClass.dart';
 import 'package:days_100_code/screens/appScreens/homeApp.dart';
 import 'package:days_100_code/services/auth.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../homeScreen.dart';
 
@@ -24,6 +22,8 @@ class _AddFire2State extends State<AddFire2> {
   final myControllerDay = TextEditingController();
   final myControllerGithub = TextEditingController();
   CollectionReference users = FirebaseFirestore.instance.collection('100Days');
+  String email = "";
+  String uid = "";
   bool isSwitched = false;
 
   Future<void> addStore() async {
@@ -50,6 +50,23 @@ class _AddFire2State extends State<AddFire2> {
             });
   }
 
+  void getEmailInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String userEmail = prefs.getString('email');
+    final String userUid = prefs.getString('uid');
+    print(userUid);
+    setState(() {
+      email = userEmail;
+      uid = userUid;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getEmailInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,9 +87,6 @@ class _AddFire2State extends State<AddFire2> {
               canvasColor: Colors.black, //desired color
             ),
             child: Drawer(
-              // Add a ListView to the drawer. This ensures the user can scroll
-              // through the options in the drawer if there isn't enough vertical
-              // space to fit everything.
               child: Consumer<FirebaseAuthenticated>(
                 builder: (context, provider, child) {
                   return ListView(
@@ -80,7 +94,7 @@ class _AddFire2State extends State<AddFire2> {
                     padding: EdgeInsets.zero,
                     children: <Widget>[
                       DrawerHeader(
-                        child: Text('100DaysOfCode',
+                        child: Text(email,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -136,9 +150,6 @@ class _AddFire2State extends State<AddFire2> {
               builder: (context, provider, child) {
             return SingleChildScrollView(
               child: Container(
-                  // constraints: BoxConstraints(
-                  //     maxHeight: MediaQuery.of(context).size.height,
-                  //     maxWidth: MediaQuery.of(context).size.width),
                   decoration: BoxDecoration(color: Colors.black),
                   padding:
                       EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
@@ -151,16 +162,6 @@ class _AddFire2State extends State<AddFire2> {
                               color: Colors.white54,
                               fontSize: 26.0,
                               fontWeight: FontWeight.w700)),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // const Divider(
-                      //   color: Colors.white54,
-                      //   height: 5,
-                      //   thickness: 2,
-                      //   indent: 0,
-                      //   endIndent: 0,
-                      // ),
                       SizedBox(
                         height: 20,
                       ),
@@ -328,28 +329,6 @@ class _AddFire2State extends State<AddFire2> {
                             if (_formKey.currentState.validate()) {
                               _displaySnackBar(context);
                               addStore();
-                              // _displaySnackBar(context);
-                              // dynamic result = await _auth.signInAnon(
-                              //     myControllerEmail.text,
-                              //     myControllerPassword.text);
-                              // if (result == null) {
-                              //   print('error signing in');
-                              //   ScaffoldMessenger.of(context)
-                              //       .hideCurrentSnackBar();
-                              //   __displaySnackBarError(context);
-                              // } else {
-                              //   provider.authCall(result.email,
-                              //       result.metadata.lastSignInTime, result.uid);
-                              //   ScaffoldMessenger.of(context)
-                              //       .hideCurrentSnackBar();
-                              //   Navigator.pushReplacement(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => HomeApp()),
-                              //   );
-                              //   print('signed in');
-                              //   print(result.metadata.lastSignInTime);
-                              // }
                             }
                           },
                           child: Row(
@@ -392,16 +371,9 @@ _displaySnackBar(BuildContext context) {
     behavior: SnackBarBehavior.floating,
     duration: Duration(days: 1),
     content: new Row(
-      children: <Widget>[
-        // SpinKitCubeGrid(
-        //   color: Colors.white,
-        //   size: 20.0,
-        // ),
-        new Text("  Adding to firestore")
-      ],
+      children: <Widget>[new Text("  Adding to firestore")],
     ),
   );
-  // _scaffoldKey.currentState.showSnackBar(snackBar);
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
@@ -412,16 +384,9 @@ _displaySnackBarSuccess(BuildContext context) {
     behavior: SnackBarBehavior.floating,
     duration: Duration(seconds: 1),
     content: new Row(
-      children: <Widget>[
-        // SpinKitCubeGrid(
-        //   color: Colors.white,
-        //   size: 20.0,
-        // ),
-        new Text("  Added to firestore")
-      ],
+      children: <Widget>[new Text("  Added to firestore")],
     ),
   );
-  // _scaffoldKey.currentState.showSnackBar(snackBar);
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 

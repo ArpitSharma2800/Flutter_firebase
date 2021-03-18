@@ -25,7 +25,6 @@ class _AuthenticateState extends State<Authenticate> {
                   color: Colors.blueGrey[900],
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(50.0),
-                    // bottomRight: Radius.circular(50.0)
                   )),
             ),
             Positioned(
@@ -131,9 +130,5 @@ class _AuthenticateState extends State<Authenticate> {
         ),
       ),
     ));
-
-    // Container(
-    //   child: SignIn(),
-    // );
   }
 }

@@ -15,7 +15,6 @@ class _LocalAuthState extends State<LocalAuth> {
   final LocalAuthentication auth = LocalAuthentication();
   _SupportState _supportState = _SupportState.unknown;
   bool _canCheckBiometrics;
-  // List<BiometricType> _availableBiometrics;
   String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
 
@@ -149,7 +148,6 @@ class _LocalAuthState extends State<LocalAuth> {
               Center(
                 child: SvgPicture.asset(
                   "assets/images/print.svg",
-                  // height: MediaQuery.of(context).size.width - 10,
                   height: MediaQuery.of(context).size.width / 3,
                 ),
               ),
